@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — B.Guru</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- ── Header ─────────────────────────────────────────── -->
+  <header id="main-header">
+    <nav>
+      <a href="index.html" class="logo">B<span>.</span>Guru</a>
+      <ul class="nav-links">
+        <li><a href="index.html#home">Home</a></li>
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#currencies">Currencies</a></li>
+        <li><a href="index.html#rates-converter">Rates &amp; Convert</a></li>
+        <li><a href="testimonials.html">Testimonials</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="#" class="nav-cta cta-whatsapp" style="padding:.45rem 1rem!important;font-size:.85rem!important;">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a></li>
+      </ul>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ── Contact Hero ───────────────────────────────────── -->
+  <div class="contact-hero">
+    <div class="container">
+      <div class="section-tag" style="background:rgba(245,158,11,.15);color:var(--gold-light);">Get in Touch</div>
+      <h1>We're here to help</h1>
+      <p>Reach out via form, phone, email — or just ping us on WhatsApp for the fastest reply.</p>
+    </div>
+  </div>
+
+  <!-- ── Contact Section ────────────────────────────────── -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-grid">
+
+        <!-- Info Panel -->
+        <div class="contact-info-panel fade-in">
+          <h3>Contact Information</h3>
+          <p>Our team typically responds within 2 minutes on WhatsApp and within 24 hours via email.</p>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="contact-item-text">
+              <p>Phone</p>
+              <p>+1 (234) 567-8900</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-item-text">
+              <p>Email</p>
+              <p>support@bguru.com</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="contact-item-text">
+              <p>Business Hours</p>
+              <p>Mon–Fri, 8am – 8pm UTC</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <i class="fas fa-globe"></i>
+            </div>
+            <div class="contact-item-text">
+              <p>Coverage</p>
+              <p>200+ Countries &amp; Territories</p>
+            </div>
+          </div>
+
+          <div class="whatsapp-cta-box">
+            <h4>⚡ Fastest Response</h4>
+            <p>Chat with us on WhatsApp — typical reply in under 2 minutes.</p>
+            <a href="#" class="cta-whatsapp" style="width:100%;justify-content:center;">
+              <i class="fab fa-whatsapp"></i> Start WhatsApp Chat
+            </a>
+          </div>
+        </div>
+
+        <!-- Form Panel -->
+        <div class="contact-form-panel fade-in">
+          <h3>Send us a message</h3>
+          <p>Fill in your details below and we'll get back to you as soon as possible.</p>
+
+          <form id="contact-form" class="contact-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="fname" placeholder="John" required>
+              </div>
+              <div class="form-group">
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lname" placeholder="Doe" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="john@example.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone / WhatsApp (optional)</label>
+              <input type="tel" id="phone" name="phone" placeholder="+1 234 567 8900">
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <select id="subject" name="subject">
+                <option value="">Select a topic...</option>
+                <option value="exchange">Currency Exchange Enquiry</option>
+                <option value="rates">Rate Enquiry</option>
+                <option value="transfer">Transfer Issue</option>
+                <option value="account">Account Help</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5"
+                placeholder="Tell us about your exchange needs or any questions you have..." required></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">
+              <i class="fas fa-paper-plane"></i> &nbsp;Send Message
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── WhatsApp FAB ────────────────────────────────────── -->
+  <a href="#" class="whatsapp-btn cta-whatsapp" title="Chat on WhatsApp">
+    <i class="fab fa-whatsapp whatsapp-icon"></i>
+  </a>
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">B<span>.</span>Guru</div>
+        <p>&copy; 2024 B.Guru. Global Money Exchange Platform. All rights reserved.</p>
+        <div style="display:flex;gap:1rem;">
+          <a href="index.html">Home</a>
+          <a href="testimonials.html">Testimonials</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
