@@ -2,270 +2,602 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>B.Guru — Global Money Exchange Made Easy</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B.Guru — Transfer Agency</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500&family=Anton&display=swap"
+    rel="stylesheet" />
+
+  <link href="style.css" rel="stylesheet">
+  <link rel="icon" type="image/png" href="assets/bguru-favicon-dark.png">
 </head>
 
 <body>
 
-  <!-- ── Header ─────────────────────────────────────────── -->
-  <header id="main-header">
+  <!-- FIXED NAVBAR DESKTOP -->
+  <header class="site-header" id="site-header">
     <nav>
-      <a href="index.html" class="logo">B<span>.</span>Guru</a>
-      <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#features">Features</a></li>
-        <li><a href="#currencies">Currencies</a></li>
-        <li><a href="#rates-converter">Rates &amp; Convert</a></li>
-        <li><a href="testimonials.html">Testimonials</a></li>
-        <li><a href="contact.html">Contact</a></li>
-        <li><a href="#rates-converter" class="nav-cta">Start Exchange</a></li>
-      </ul>
-      <div class="hamburger" id="hamburger">
-        <span></span><span></span><span></span>
+      <div class="logo">
+        <div class="logo-arrow">
+          <div class="lines">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+        <div class="logo-arrow">
+          <div class="chevron">&#8250;</div>
+        </div>
+        <span class="logo-bg">B.G</span>
+        <div class="logo-right">
+          <span class="logo-uru">URU</span>
+          <span class="logo-tagline">Transfer Agency</span>
+        </div>
       </div>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#rates">Rates</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="https://wa.me/237650653158" class="whatsapp-btn">WhatsApp</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
     </nav>
   </header>
 
-  <!-- ── Hero ───────────────────────────────────────────── -->
-  <section id="home" class="hero">
-    <div class="hero-content">
-      <div class="hero-eyebrow">
-        <i class="fas fa-shield-alt"></i> Trusted by 50,000+ users worldwide
-      </div>
-      <h1>Global money exchange<br><em>made effortless</em></h1>
-      <p>Send and receive money worldwide with competitive rates, zero hidden fees, and instant WhatsApp support.</p>
-      <div class="hero-actions">
-        <a href="#rates-converter" class="btn btn-gold">
-          <i class="fas fa-exchange-alt"></i> Convert Now
-        </a>
-        <a href="#" class="cta-whatsapp">
-          <i class="fab fa-whatsapp"></i> Chat on WhatsApp
-        </a>
-      </div>
-      <div class="hero-stats">
-        <div class="stat-item">
-          <div class="stat-num">200<span>+</span></div>
-          <div class="stat-label">Countries</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">$2<span>B+</span></div>
-          <div class="stat-label">Transferred</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">50<span>k+</span></div>
-          <div class="stat-label">Happy Users</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num">2<span>min</span></div>
-          <div class="stat-label">Avg. Response</div>
+  <!-- MOBILE NAV DRAWER (in body, not fixed) -->
+  <div class="mobile-nav-overlay" id="mobile-overlay"></div>
+  <aside class="mobile-nav" id="mobile-nav">
+    <div class="mobile-nav-header">
+      <div class="logo">
+        <span class="logo-bg">B.G</span>
+        <div class="logo-right">
+          <span class="logo-uru">URU</span>
+          <span class="logo-tagline">Transfer Agency</span>
         </div>
       </div>
+      <button class="mobile-close" id="mobile-close">✕</button>
     </div>
-  </section>
-
-  <!-- ── Features ───────────────────────────────────────── -->
-  <section id="features" class="fade-in">
-    <div class="container">
-      <div class="section-tag">Why B.Guru</div>
-      <h2 class="section-title">Built for speed, trust &amp; savings</h2>
-      <p class="section-sub">Everything you need to move money across borders — without the bank headaches.</p>
-      <div class="features-grid">
-        <div class="feature-card fade-in">
-          <div class="feature-icon"><i class="fas fa-bolt"></i></div>
-          <h3>Instant Transfers</h3>
-          <p>Send money in minutes with cutting-edge real-time payment rails — no waiting days.</p>
-        </div>
-        <div class="feature-card fade-in">
-          <div class="feature-icon"><i class="fas fa-globe"></i></div>
-          <h3>Global Coverage</h3>
-          <p>Exchange in 200+ countries and territories. Wherever your family is, we've got you covered.</p>
-        </div>
-        <div class="feature-card fade-in">
-          <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
-          <h3>Best Rates</h3>
-          <p>Real exchange rates with zero hidden markups. See exactly what you get before you send.</p>
-        </div>
-        <div class="feature-card fade-in">
-          <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
-          <h3>Bank-Grade Security</h3>
-          <p>256-bit encryption and full regulatory compliance keeps your money safe at all times.</p>
-        </div>
-      </div>
+    <ul class="mobile-nav-links">
+      <li><a href="#hero" class="mob-link">Home</a></li>
+      <li><a href="#about" class="mob-link">About</a></li>
+      <li><a href="#rates" class="mob-link">Rates & Converter</a></li>
+      <li><a href="#services" class="mob-link">Services</a></li>
+      <li><a href="#testimonials" class="mob-link">Reviews</a></li>
+      <li><a href="#contact" class="mob-link">Contact</a></li>
+    </ul>
+    <div class="mobile-nav-footer">
+      <a href="https://wa.me/237650653158" class="btn-primary"
+        style="text-decoration:none;text-align:center;display:block;">Message on WhatsApp</a>
+      <div class="mobile-contact-nums">+237 650 653 158 &nbsp;|&nbsp; +234 916 257 0995</div>
     </div>
-  </section>
+  </aside>
 
-  <!-- ── Currencies ─────────────────────────────────────── -->
-  <section id="currencies" class="fade-in">
-    <div class="container">
-      <div class="section-tag">Currencies</div>
-      <h2 class="section-title">Supported Currencies</h2>
-      <p class="section-sub">Major global currencies with live rates, updated every few seconds.</p>
-      <div class="currencies-grid">
-        <div class="currency-card fade-in">
-          <div class="cc-symbol" style="color:#6366F1;">$</div>
-          <h3>USD</h3>
-          <p>United States</p>
-        </div>
-        <div class="currency-card fade-in">
-          <div class="cc-symbol" style="color:#45b7d1;">$</div>
-          <h3>CAD</h3>
-          <p>Canada</p>
-        </div>
-        <div class="currency-card fade-in">
-          <div class="cc-symbol" style="color:#00875a;">₦</div>
-          <h3>NGN</h3>
-          <p>Nigeria</p>
-        </div>
-        <div class="currency-card fade-in">
-          <div class="cc-symbol" style="color:#F59E0B;">₹</div>
-          <h3>INR</h3>
-          <p>India</p>
-        </div>
-        <div class="currency-card fade-in">
-          <div class="cc-symbol" style="color:#f39c12;">€</div>
-          <h3>EUR</h3>
-          <p>Eurozone</p>
-        </div>
-        <div class="currency-card fade-in">
-          <div class="cc-symbol" style="color:#4299e1;">₵</div>
-          <h3>GHS</h3>
-          <p>Ghana</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- SCROLLABLE CONTENT -->
+  <main>
 
-  <!-- ── Live Rates + Converter (combined) ──────────────── -->
-  <section id="rates-converter" class="fade-in">
-    <div class="container">
-      <div class="section-tag">Live Rates &amp; Converter</div>
-      <h2 class="section-title">Check rates, convert instantly</h2>
-      <p class="section-sub">Real-time exchange rates and a handy converter — side by side.</p>
-
-      <div class="rates-converter-grid">
-
-        <!-- Live Rates Table -->
-        <div class="rates-panel fade-in">
-          <div class="panel-header">
-            <h3><i class="fas fa-chart-bar" style="margin-right:0.5rem;color:var(--gold);"></i> Live Exchange Rates</h3>
-            <span class="live-badge"><span class="live-dot"></span> Live</span>
+    <!-- HERO -->
+    <section id="hero">
+      <div class="hero-left" data-reveal>
+        <div class="hero-badge"><span class="badge-dot"></span> Trusted by 10,000+ customers</div>
+        <h1 class="hero-title">Let's<br>Handle<br>Your<br>International<br>Transactions</h1>
+        <p class="section-body">Enjoy fast, secure currency exchange with trusted rates and smooth transactions — across
+          180+ countries. No hidden fees. No delays. Just money moving the way it should.</p>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-num" data-count="180">0</span><span>+</span>
+            <div class="stat-label">Countries</div>
           </div>
-          <table class="rates-table">
+          <div class="stat-div"></div>
+          <div class="stat"><span class="stat-num" data-count="10">0</span><span>K+</span>
+            <div class="stat-label">Customers</div>
+          </div>
+          <div class="stat-div"></div>
+          <div class="stat"><span class="stat-num" data-count="99">0</span><span>%</span>
+            <div class="stat-label">Satisfaction</div>
+          </div>
+        </div>
+        <div class="hero-cta">
+          <a href="#contact" class="btn-primary">Get Started</a>
+          <a href="#about" class="btn-outline">Learn More</a>
+        </div>
+      </div>
+      <div class="hero-image-shape" data-reveal data-delay="200">
+        <img src="assets/happy-young-woman-man-embrace-have-fun-use-modern-technologies-hold-smartphones.jpg"
+          alt="Happy customers" />
+        <div class="hero-floating-card card-1">
+          <div class="fc-icon">✓</div>
+          <div>
+            <div class="fc-title">Transfer Complete</div>
+            <div class="fc-sub">$1,200 → XAF</div>
+          </div>
+        </div>
+        <div class="hero-floating-card card-2">
+          <div class="fc-icon">⚡</div>
+          <div>
+            <div class="fc-title">Instant Processing</div>
+            <div class="fc-sub">
+              < 2 minutes</div>
+            </div>
+          </div>
+        </div>
+    </section>
+
+    <!-- TRUST BAR -->
+    <section id="trust-bar">
+      <div class="trust-inner">
+        <div class="trust-item" data-reveal>
+          <div class="trust-icon">🔒</div>
+          <div class="trust-text"><strong>Bank-Grade Security</strong><span>256-bit encryption on all transfers</span>
+          </div>
+        </div>
+        <div class="trust-div"></div>
+        <div class="trust-item" data-reveal data-delay="100">
+          <div class="trust-icon">⚡</div>
+          <div class="trust-text"><strong>Lightning Fast</strong><span>Most transfers in under 5 minutes</span></div>
+        </div>
+        <div class="trust-div"></div>
+        <div class="trust-item" data-reveal data-delay="200">
+          <div class="trust-icon">📞</div>
+          <div class="trust-text"><strong>24/7 Support</strong><span>Always here when you need us</span></div>
+        </div>
+        <div class="trust-div"></div>
+        <div class="trust-item" data-reveal data-delay="300">
+          <div class="trust-icon">💱</div>
+          <div class="trust-text"><strong>Zero Hidden Fees</strong><span>What you see is what you pay</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="about-grid">
+        <div class="about-left" data-reveal>
+          <span class="section-label">Who We Are</span>
+          <h2 class="section-title">Built on Trust,<br>Driven by Speed</h2>
+          <p class="section-body">B.Guru Transfer Agency has been helping individuals and businesses move money across
+            borders safely and efficiently. We believe international transfers should be simple, transparent, and
+            accessible to everyone — from first-time senders to businesses moving millions.</p>
+          <p class="section-body" style="margin-top:12px;">Our team of experts works around the clock to ensure your
+            money arrives exactly where it should, exactly when you need it. With real-time exchange rates and no hidden
+            fees, you're always in control.</p>
+          <div class="about-features">
+            <div class="af-item">
+              <div class="af-check">✓</div><span>Licensed & regulated money service</span>
+            </div>
+            <div class="af-item">
+              <div class="af-check">✓</div><span>Real-time exchange rate tracking</span>
+            </div>
+            <div class="af-item">
+              <div class="af-check">✓</div><span>Dedicated account managers</span>
+            </div>
+            <div class="af-item">
+              <div class="af-check">✓</div><span>Business & personal accounts</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-right" data-reveal data-delay="150">
+          <div class="about-card ac-main">
+            <div class="ac-num" data-count="50000">0</div>
+            <div class="ac-unit">+</div>
+            <div class="ac-label">Successful Transfers</div>
+          </div>
+          <div class="about-card ac-sub1">
+            <div class="ac-num" data-count="180">0</div>
+            <div class="ac-unit">+</div>
+            <div class="ac-label">Countries Supported</div>
+          </div>
+          <div class="about-card ac-sub2">
+            <div class="ac-icon">🌍</div>
+            <div class="ac-label" style="margin-top:8px;">Global Reach,<br>Local Care</div>
+          </div>
+          <div class="about-card ac-sub3">
+            <div class="ac-num" data-count="4">0</div>
+            <div class="ac-unit">.9★</div>
+            <div class="ac-label">Average Rating</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RATES & CONVERTER -->
+    <section id="rates">
+      <div class="rates-header" data-reveal>
+        <span class="section-label">Live Rates</span>
+        <h2 class="section-title">Transparent Pricing,<br>Always</h2>
+        <p class="section-body">Real-time exchange rates — refreshed every 30 seconds. No hidden markups.</p>
+      </div>
+      <div class="rates-converter-wrap">
+        <!-- Live Rates Table -->
+        <div class="rates-table-wrap" data-reveal>
+          <div class="rates-table-header">
+            <span>Live Exchange Rates</span>
+            <span class="rates-refresh"><span class="pulse-dot"></span> Live</span>
+          </div>
+          <table class="rates-table" id="rates-table">
             <thead>
               <tr>
-                <th>Pair</th>
-                <th>Rate</th>
+                <th>Currency</th>
+                <th>Code</th>
+                <th>Rate (vs USD)</th>
                 <th>Change</th>
-                <th>Updated</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td><span class="pair-cell">USD <span class="pair-arrow">→</span> NGN</span></td>
-                <td><span class="rate-value">1600.45</span></td>
-                <td><span class="rate-change positive">+0.02%</span></td>
-                <td><span class="rate-time">Just now</span></td>
-              </tr>
-              <tr>
-                <td><span class="pair-cell">USD <span class="pair-arrow">→</span> INR</span></td>
-                <td><span class="rate-value">83.72</span></td>
-                <td><span class="rate-change negative">-0.01%</span></td>
-                <td><span class="rate-time">Just now</span></td>
-              </tr>
-              <tr>
-                <td><span class="pair-cell">USD <span class="pair-arrow">→</span> GHS</span></td>
-                <td><span class="rate-value">15.28</span></td>
-                <td><span class="rate-change positive">+0.05%</span></td>
-                <td><span class="rate-time">Just now</span></td>
-              </tr>
-              <tr>
-                <td><span class="pair-cell">EUR <span class="pair-arrow">→</span> GHS</span></td>
-                <td><span class="rate-value">16.52</span></td>
-                <td><span class="rate-change negative">-0.03%</span></td>
-                <td><span class="rate-time">Just now</span></td>
-              </tr>
-              <tr>
-                <td><span class="pair-cell">USD <span class="pair-arrow">→</span> CAD</span></td>
-                <td><span class="rate-value">1.38</span></td>
-                <td><span class="rate-change positive">+0.01%</span></td>
-                <td><span class="rate-time">Just now</span></td>
-              </tr>
+            <tbody id="rates-body">
+              <!-- JS fills this -->
             </tbody>
           </table>
+          <div class="rates-footnote">Rates from open exchange API · Updated every 30s</div>
         </div>
 
-        <!-- Converter -->
-        <div class="converter-panel fade-in">
-          <div class="panel-header">
-            <h3><i class="fas fa-exchange-alt" style="margin-right:0.5rem;color:var(--gold);"></i> Currency Converter</h3>
-            <span class="live-badge"><span class="live-dot"></span> Instant</span>
+        <!-- Currency Converter -->
+        <div class="converter-wrap" data-reveal data-delay="150">
+          <div class="converter-header">Currency Converter</div>
+          <div class="converter-row">
+            <label>Amount</label>
+            <input type="number" id="conv-amount" value="100" min="0" />
           </div>
-          <div class="converter">
-            <form id="converter-form">
-              <div class="converter-group">
-                <label for="amount">Amount</label>
-                <input type="number" id="amount" placeholder="e.g. 500" min="0" step="0.01">
-              </div>
-              <div class="converter-group">
-                <label for="from-currency">From Currency</label>
-                <select id="from-currency">
-                  <option value="USD">🇺🇸 USD — US Dollar</option>
-                  <option value="EUR">🇪🇺 EUR — Euro</option>
-                  <option value="NGN">🇳🇬 NGN — Nigerian Naira</option>
-                  <option value="INR">🇮🇳 INR — Indian Rupee</option>
-                  <option value="GHS">🇬🇭 GHS — Ghanaian Cedi</option>
-                  <option value="CAD">🇨🇦 CAD — Canadian Dollar</option>
-                </select>
-              </div>
-              <div class="converter-group">
-                <label for="to-currency">To Currency</label>
-                <select id="to-currency">
-                  <option value="NGN">🇳🇬 NGN — Nigerian Naira</option>
-                  <option value="INR">🇮🇳 INR — Indian Rupee</option>
-                  <option value="GHS">🇬🇭 GHS — Ghanaian Cedi</option>
-                  <option value="USD">🇺🇸 USD — US Dollar</option>
-                  <option value="EUR">🇪🇺 EUR — Euro</option>
-                  <option value="CAD">🇨🇦 CAD — Canadian Dollar</option>
-                </select>
-              </div>
-              <button type="submit" id="convert-btn" class="convert-btn">
-                <i class="fas fa-exchange-alt"></i> Convert Now
-              </button>
-              <div id="conversion-result" class="result"></div>
-            </form>
-            <p style="text-align:center;font-size:.78rem;color:var(--muted);margin-top:1rem;">
-              Rates are indicative. <a href="contact.html" style="color:var(--indigo);">Contact us</a> for live quotes.
-            </p>
+          <div class="converter-row">
+            <label>From</label>
+            <select id="conv-from">
+              <option value="USD">🇺🇸 USD — US Dollar</option>
+              <option value="EUR">🇪🇺 EUR — Euro</option>
+              <option value="NGN">🇳🇬 NGN — Naira</option>
+              <option value="XAF">🇨🇲 XAF — CFA Franc</option>
+              <option value="GHS">🇬🇭 GHS — Ghana Cedis</option>
+              <option value="INR">🇮🇳 INR — Indian Rupee</option>
+            </select>
           </div>
+          <button class="swap-btn" id="swap-btn" title="Swap currencies">⇅</button>
+          <div class="converter-row">
+            <label>To</label>
+            <select id="conv-to">
+              <option value="XAF">🇨🇲 XAF — CFA Franc</option>
+              <option value="USD">🇺🇸 USD — US Dollar</option>
+              <option value="EUR">🇪🇺 EUR — Euro</option>
+              <option value="NGN">🇳🇬 NGN — Naira</option>
+              <option value="GHS">🇬🇭 GHS — Ghana Cedis</option>
+              <option value="INR">🇮🇳 INR — Indian Rupee</option>
+            </select>
+          </div>
+          <div class="conv-result" id="conv-result">
+            <div class="conv-result-num" id="conv-num">—</div>
+            <div class="conv-result-label" id="conv-label">Enter an amount to convert</div>
+          </div>
+          <div class="conv-rate-display" id="conv-rate-display"></div>
+          <a href="https://wa.me/237650653158" class="btn-primary"
+            style="text-decoration:none;text-align:center;display:block;margin-top:20px;">Start a Transfer →</a>
         </div>
-
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ── WhatsApp FAB ────────────────────────────────────── -->
-  <a href="#" class="whatsapp-btn cta-whatsapp" title="Chat on WhatsApp">
-    <i class="fab fa-whatsapp whatsapp-icon"></i>
-  </a>
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="services-header" data-reveal>
+        <span class="section-label">What We Offer</span>
+        <h2 class="section-title">Everything You Need<br>to Send Money</h2>
+        <p class="section-body">From Zelle to RMB, Coins to CFA — we handle it all. Fast processing, real-time
+          confirmation, and 24/7 support.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card" data-reveal>
+          <div class="sc-icon">💸</div>
+          <h3>Personal Transfers</h3>
+          <p>Send money to family and friends abroad quickly and securely. Competitive rates with zero surprise fees at
+            checkout.</p>
+        </div>
+        <div class="service-card" data-reveal data-delay="100">
+          <div class="sc-icon">🏢</div>
+          <h3>Business Payments</h3>
+          <p>Pay international suppliers, contractors, and partners with ease. Bulk transfer options available for
+            high-volume businesses.</p>
+        </div>
+        <div class="service-card" data-reveal data-delay="200">
+          <div class="sc-icon">💱</div>
+          <h3>Currency Exchange</h3>
+          <p>Get the best market rates for USD, EUR, NGN, XAF, GHS, INR and many more. Locked-in rates available.</p>
+        </div>
+        <div class="service-card" data-reveal data-delay="300">
+          <div class="sc-icon">📱</div>
+          <h3>Mobile Money</h3>
+          <p>Send directly to MTN Mobile Money, Orange Money, and other mobile wallets across Africa and beyond.</p>
+        </div>
+        <div class="service-card" data-reveal data-delay="100">
+          <div class="sc-icon">🔐</div>
+          <h3>Secure Escrow</h3>
+          <p>Trade safely with our escrow service — funds are held securely until both parties confirm the transaction.
+          </p>
+        </div>
+        <div class="service-card" data-reveal data-delay="200">
+          <div class="sc-icon">🌐</div>
+          <h3>Crypto & Digital</h3>
+          <p>Exchange Bitcoin, USDT, and other cryptocurrencies to local currencies. Fast settlement, real rates.</p>
+        </div>
+      </div>
+    </section>
 
-  <!-- ── Footer ─────────────────────────────────────────── -->
-  <footer>
-    <div class="container">
+    <!-- MINI TESTIMONIALS (home preview) -->
+    <section id="testimonials-preview">
+      <div class="tp-header" data-reveal>
+        <span class="section-label">What Customers Say</span>
+        <h2 class="section-title">Trusted by Thousands<br>Across the Globe</h2>
+        <div class="tp-aggregate">
+          <div class="tp-stars">★★★★★</div>
+          <div class="tp-score">4.9 out of 5</div>
+          <div class="tp-count">based on 2,400+ reviews</div>
+        </div>
+      </div>
+      <div class="testimonials-mini-grid">
+        <div class="tmini-card" data-reveal>
+          <div class="tmini-stars">★★★★★</div>
+          <p>"B.Guru saved me so much stress. I needed to send money to Cameroon urgently and they processed it in under
+            3 minutes. Incredible service!"</p>
+          <div class="tmini-author">
+            <div class="tmini-avatar">AO</div>
+            <div><strong>Adaeze Okonkwo</strong><span>Lagos, Nigeria</span></div>
+          </div>
+        </div>
+        <div class="tmini-card" data-reveal data-delay="100">
+          <div class="tmini-stars">★★★★★</div>
+          <p>"The rates are genuinely the best I've found. No hidden charges, the amount I sent was exactly what
+            arrived. Will use again and again."</p>
+          <div class="tmini-author">
+            <div class="tmini-avatar">JM</div>
+            <div><strong>Jean-Marc Essola</strong><span>Yaoundé, Cameroon</span></div>
+          </div>
+        </div>
+        <div class="tmini-card" data-reveal data-delay="200">
+          <div class="tmini-stars">★★★★☆</div>
+          <p>"Great service overall. The WhatsApp support is super responsive and they helped me convert INR to XAF
+            seamlessly for the first time."</p>
+          <div class="tmini-author">
+            <div class="tmini-avatar">RK</div>
+            <div><strong>Rajan Kapoor</strong><span>Mumbai, India</span></div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:32px;" data-reveal>
+        <a href="#testimonials" class="btn-outline">Read All Reviews →</a>
+      </div>
+    </section>
+
+    <!-- FULL TESTIMONIALS -->
+    <section id="testimonials">
+      <div class="tp-header" data-reveal>
+        <span class="section-label">Customer Reviews</span>
+        <h2 class="section-title">Real People,<br>Real Results</h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="tcard" data-reveal>
+          <div class="tcard-top">
+            <div class="tcard-avatar">AO</div>
+            <div><strong>Adaeze Okonkwo</strong><span>Lagos, Nigeria</span></div>
+            <div class="tcard-stars">★★★★★</div>
+          </div>
+          <p>"B.Guru saved me so much stress. I needed to send money to Cameroon urgently and they processed it in under
+            3 minutes. Incredible service! The WhatsApp line is always responsive."</p>
+          <div class="tcard-tag">Personal Transfer</div>
+        </div>
+        <div class="tcard" data-reveal data-delay="80">
+          <div class="tcard-top">
+            <div class="tcard-avatar">JM</div>
+            <div><strong>Jean-Marc Essola</strong><span>Yaoundé, Cameroon</span></div>
+            <div class="tcard-stars">★★★★★</div>
+          </div>
+          <p>"The rates are genuinely the best I've found anywhere online or offline. No hidden charges whatsoever — the
+            amount I sent was exactly what arrived."</p>
+          <div class="tcard-tag">Currency Exchange</div>
+        </div>
+        <div class="tcard" data-reveal data-delay="160">
+          <div class="tcard-top">
+            <div class="tcard-avatar">RK</div>
+            <div><strong>Rajan Kapoor</strong><span>Mumbai, India</span></div>
+            <div class="tcard-stars">★★★★☆</div>
+          </div>
+          <p>"Great service overall. The WhatsApp support is super responsive and they helped me convert INR to XAF
+            seamlessly. First time doing this kind of exchange!"</p>
+          <div class="tcard-tag">INR → XAF</div>
+        </div>
+        <div class="tcard" data-reveal data-delay="240">
+          <div class="tcard-top">
+            <div class="tcard-avatar">FN</div>
+            <div><strong>Fatima Ndiaye</strong><span>Dakar, Senegal</span></div>
+            <div class="tcard-stars">★★★★★</div>
+          </div>
+          <p>"Used B.Guru for my business payments three times now. Each time has been smoother than the last. My
+            suppliers in Europe receive funds same day!"</p>
+          <div class="tcard-tag">Business Payment</div>
+        </div>
+        <div class="tcard" data-reveal data-delay="80">
+          <div class="tcard-top">
+            <div class="tcard-avatar">CC</div>
+            <div><strong>Chukwuemeka Chukwu</strong><span>Abuja, Nigeria</span></div>
+            <div class="tcard-stars">★★★★★</div>
+          </div>
+          <p>"Transferred USDT to NGN in minutes. The crypto exchange service is top-notch and the rate was much better
+            than three other services I compared."</p>
+          <div class="tcard-tag">Crypto Exchange</div>
+        </div>
+        <div class="tcard" data-reveal data-delay="160">
+          <div class="tcard-top">
+            <div class="tcard-avatar">PB</div>
+            <div><strong>Paul Biya-Ndong</strong><span>Douala, Cameroon</span></div>
+            <div class="tcard-stars">★★★★★</div>
+          </div>
+          <p>"My son sends me money from the US regularly through B.Guru. It's become the only service we trust. Fast,
+            reliable, and the team actually picks up the phone."</p>
+          <div class="tcard-tag">USD → XAF</div>
+        </div>
+        <div class="tcard" data-reveal data-delay="240">
+          <div class="tcard-top">
+            <div class="tcard-avatar">AM</div>
+            <div><strong>Amara Mensah</strong><span>Accra, Ghana</span></div>
+            <div class="tcard-stars">★★★★☆</div>
+          </div>
+          <p>"Converted GHS to EUR for my study abroad program. The process was explained step by step via WhatsApp.
+            Felt very safe the entire time."</p>
+          <div class="tcard-tag">GHS → EUR</div>
+        </div>
+        <div class="tcard" data-reveal data-delay="80">
+          <div class="tcard-top">
+            <div class="tcard-avatar">SL</div>
+            <div><strong>Sophie Lalande</strong><span>Paris, France</span></div>
+            <div class="tcard-stars">★★★★★</div>
+          </div>
+          <p>"Je recommande vivement B.Guru. Service rapide, taux compétitifs et le support via WhatsApp répond toujours
+            dans les 5 minutes. Parfait pour envoyer de l'argent en Afrique."</p>
+          <div class="tcard-tag">EUR → XAF</div>
+        </div>
+        <div class="tcard" data-reveal data-delay="160">
+          <div class="tcard-top">
+            <div class="tcard-avatar">DB</div>
+            <div><strong>Daniel Boateng</strong><span>London, UK</span></div>
+            <div class="tcard-stars">★★★★★</div>
+          </div>
+          <p>"Running an import business means I do a lot of international transfers. B.Guru handles them all — always
+            on time, always the best rate I can find."</p>
+          <div class="tcard-tag">Business Transfer</div>
+        </div>
+      </div>
+
+      <!-- Review Stats Bar -->
+      <div class="review-stats" data-reveal>
+        <div class="rs-header">Rating Breakdown</div>
+        <div class="rs-bar-row"><span>5 ★</span>
+          <div class="rs-bar-bg">
+            <div class="rs-bar-fill" style="width:78%"></div>
+          </div><span>78%</span>
+        </div>
+        <div class="rs-bar-row"><span>4 ★</span>
+          <div class="rs-bar-bg">
+            <div class="rs-bar-fill" style="width:15%"></div>
+          </div><span>15%</span>
+        </div>
+        <div class="rs-bar-row"><span>3 ★</span>
+          <div class="rs-bar-bg">
+            <div class="rs-bar-fill" style="width:5%"></div>
+          </div><span>5%</span>
+        </div>
+        <div class="rs-bar-row"><span>2 ★</span>
+          <div class="rs-bar-bg">
+            <div class="rs-bar-fill" style="width:1%"></div>
+          </div><span>1%</span>
+        </div>
+        <div class="rs-bar-row"><span>1 ★</span>
+          <div class="rs-bar-bg">
+            <div class="rs-bar-fill" style="width:1%"></div>
+          </div><span>1%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="contact-grid">
+        <div class="contact-left" data-reveal>
+          <span class="section-label">Get In Touch</span>
+          <h2 class="section-title">Ready to Send<br>Money Today?</h2>
+          <p class="section-body">Our team is available 24/7 to assist you. Reach out via WhatsApp for the fastest
+            response — most queries answered in under 5 minutes.</p>
+
+          <div class="contact-methods">
+            <a href="https://wa.me/237650653158" class="contact-method whatsapp-method">
+              <div class="cm-icon">💬</div>
+              <div>
+                <div class="cm-title">WhatsApp (Cameroon)</div>
+                <div class="cm-value">+237 650 653 158</div>
+              </div>
+              <div class="cm-arrow">→</div>
+            </a>
+            <a href="https://wa.me/2349162570995" class="contact-method whatsapp-method">
+              <div class="cm-icon">💬</div>
+              <div>
+                <div class="cm-title">WhatsApp (Nigeria)</div>
+                <div class="cm-value">+234 916 257 0995</div>
+              </div>
+              <div class="cm-arrow">→</div>
+            </a>
+            <div class="contact-method">
+              <div class="cm-icon">🕐</div>
+              <div>
+                <div class="cm-title">Operating Hours</div>
+                <div class="cm-value">24 hours, 7 days a week</div>
+              </div>
+            </div>
+            <div class="contact-method">
+              <div class="cm-icon">⚡</div>
+              <div>
+                <div class="cm-title">Average Response Time</div>
+                <div class="cm-value">Under 5 minutes</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-right" data-reveal data-delay="150">
+          <div class="contact-form-card">
+            <div class="cfc-title">Send Us a Message</div>
+            <div class="cfc-sub">We'll get back to you on WhatsApp</div>
+            <div class="cf-field">
+              <label>Full Name</label>
+              <input type="text" placeholder="Your full name" id="cf-name" />
+            </div>
+            <div class="cf-field">
+              <label>Phone / WhatsApp</label>
+              <input type="tel" placeholder="+1 234 567 8900" id="cf-phone" />
+            </div>
+            <div class="cf-field">
+              <label>What do you need?</label>
+              <select id="cf-service">
+                <option value="">Select a service</option>
+                <option>Personal Transfer</option>
+                <option>Business Payment</option>
+                <option>Currency Exchange</option>
+                <option>Crypto Exchange</option>
+                <option>Mobile Money</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="cf-field">
+              <label>Message</label>
+              <textarea placeholder="Tell us about your transfer — amounts, currencies, timeline..." id="cf-msg"
+                rows="4"></textarea>
+            </div>
+            <button class="btn-primary" id="cf-submit" style="width:100%;padding:14px;">Send via WhatsApp →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
       <div class="footer-inner">
-        <div class="footer-logo">B<span>.</span>Guru</div>
-        <p>&copy; 2024 B.Guru. Global Money Exchange Platform. All rights reserved.</p>
-        <div style="display:flex;gap:1rem;">
-          <a href="testimonials.html">Testimonials</a>
-          <a href="contact.html">Contact</a>
+        <div class="footer-logo">
+          <span class="logo-bg" style="font-size:30px;">B.G</span>
+          <div class="logo-right">
+            <span class="logo-uru" style="font-size:22px;">URU</span>
+            <span class="logo-tagline">Transfer Agency</span>
+          </div>
         </div>
+        <div class="footer-links">
+          <a href="#hero">Home</a>
+          <a href="#about">About</a>
+          <a href="#rates">Rates</a>
+          <a href="#services">Services</a>
+          <a href="#testimonials">Reviews</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-copy">© 2025 B.Guru Transfer Agency. All rights reserved.</div>
       </div>
-    </div>
-  </footer>
+    </footer>
 
-  <script src="script.js"></script>
+  </main>
+
+  <script src="main.js"></script>
 </body>
+
 </html>
