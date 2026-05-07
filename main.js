@@ -1,4 +1,5 @@
 /* ── main.js — B.Guru Transfer Agency ── */
+document.documentElement.classList.add("js");
 
 /* ── 1. MOBILE NAV ── */
 const hamburger = document.getElementById("hamburger");
@@ -51,7 +52,13 @@ const revealObserver = new IntersectionObserver(
   },
   { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
 );
-revealEls.forEach((el) => revealObserver.observe(el));
+revealEls.forEach((el) => {
+  if (el.getBoundingClientRect().top < window.innerHeight) {
+    el.classList.add("revealed");
+    return;
+  }
+  revealObserver.observe(el);
+});
 
 /* ── 4. COUNT-UP ANIMATION ── */
 function animateCount(el, target, suffix = "") {
@@ -113,83 +120,38 @@ const barObserver = new IntersectionObserver(
 const reviewStats = document.querySelector(".review-stats");
 if (reviewStats) barObserver.observe(reviewStats);
 
-/* ── 6. LIVE RATES TABLE ── */
-
-// Currency data for the 6 supported currencies (vs USD)
+/* 6. LIVE RATES AND CONVERTER */
 const CURRENCIES = [
-  { code: "EUR", name: "Euro", flag: "🇪🇺", baseRate: 0.92 },
-  { code: "NGN", name: "Naira", flag: "🇳🇬", baseRate: 1520 },
-  { code: "XAF", name: "CFA Franc", flag: "🇨🇲", baseRate: 605 },
-  { code: "GHS", name: "Ghana Cedis", flag: "🇬🇭", baseRate: 15.2 },
-  { code: "INR", name: "Indian Rupee", flag: "🇮🇳", baseRate: 83.6 },
+  { code: "USD", name: "US Dollar", baseRate: 1, frankfurter: true },
+  { code: "EUR", name: "Euro", baseRate: 0.92, frankfurter: true },
+  { code: "NGN", name: "Naira", baseRate: 1520, frankfurter: false },
+  { code: "XAF", name: "CFA Franc", baseRate: 605, frankfurter: false },
+  { code: "GHS", name: "Ghana Cedis", baseRate: 15.2, frankfurter: false },
+  { code: "INR", name: "Indian Rupee", baseRate: 83.6, frankfurter: true },
 ];
 
-let liveRates = {}; // code -> rate (vs USD)
-let prevRates = {};
+const rateState = {
+  base: "USD",
+  selectedCurrency: "XAF",
+  selectedRange: "7D",
+  liveRates: CURRENCIES.reduce((rates, currency) => {
+    rates[currency.code] = currency.baseRate;
+    return rates;
+  }, {}),
+  prevRates: {},
+  lastUpdated: null,
+  chart: null,
+  chartRequest: 0,
+};
 
-// Try to get real rates from a free, no-key-required API
-async function fetchRates() {
-  try {
-    const codes = CURRENCIES.map((c) => c.code).join(",");
-    const res = await fetch(
-      `https://api.frankfurter.app/latest?from=USD&to=${codes}`,
-      { signal: AbortSignal.timeout(5000) },
-    );
-    if (!res.ok) throw new Error("API fail");
-    const data = await res.json();
-    prevRates = { ...liveRates };
-    liveRates = { USD: 1, ...data.rates };
-  } catch {
-    // Fallback: simulate slight drift from base rates
-    prevRates = { ...liveRates };
-    CURRENCIES.forEach((c) => {
-      const prev = liveRates[c.code] || c.baseRate;
-      const drift = (Math.random() - 0.5) * prev * 0.002;
-      liveRates[c.code] = parseFloat((prev + drift).toFixed(4));
-    });
-    liveRates["USD"] = 1;
-  }
-  renderRatesTable();
-  updateConverter();
-}
-
-function renderRatesTable() {
-  const tbody = document.getElementById("rates-body");
-  if (!tbody) return;
-  tbody.innerHTML = "";
-  CURRENCIES.forEach((c) => {
-    const rate = liveRates[c.code];
-    if (!rate) return;
-    const prev = prevRates[c.code] || rate;
-    const change = ((rate - prev) / prev) * 100;
-    const changeStr =
-      change >= 0
-        ? `<span class="rate-change up">▲ ${change.toFixed(3)}%</span>`
-        : `<span class="rate-change down">▼ ${Math.abs(change).toFixed(3)}%</span>`;
-
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${c.flag} ${c.name}</td>
-      <td><strong>${c.code}</strong></td>
-      <td class="rate-num">${rate >= 1 ? rate.toFixed(2) : rate.toFixed(4)}</td>
-      <td>${changeStr}</td>
-    `;
-    // Flash animation on update
-    tr.style.animation = "none";
-    tbody.appendChild(tr);
-    requestAnimationFrame(() => {
-      tr.style.transition = "background 0.6s";
-      tr.style.background = "rgba(196,168,232,0.2)";
-      setTimeout(() => (tr.style.background = ""), 800);
-    });
-  });
-}
-
-// Fetch immediately and then every 30 seconds
-fetchRates();
-setInterval(fetchRates, 30000);
-
-/* ── 7. CURRENCY CONVERTER ── */
+const selectedPair = document.getElementById("selected-pair");
+const selectedRate = document.getElementById("selected-rate");
+const selectedChange = document.getElementById("selected-change");
+const currencyTabs = document.querySelectorAll(".currency-tab");
+const rangeTabs = document.querySelectorAll(".range-tab");
+const chartCanvas = document.getElementById("rate-chart");
+const chartLoading = document.getElementById("chart-loading");
+const ratesUpdated = document.getElementById("rates-updated");
 const convAmount = document.getElementById("conv-amount");
 const convFrom = document.getElementById("conv-from");
 const convTo = document.getElementById("conv-to");
@@ -197,11 +159,222 @@ const convNum = document.getElementById("conv-num");
 const convLabel = document.getElementById("conv-label");
 const convRate = document.getElementById("conv-rate-display");
 const swapBtn = document.getElementById("swap-btn");
+const transferWhatsapp = document.getElementById("transfer-whatsapp");
+
+function currencyMeta(code) {
+  return CURRENCIES.find((currency) => currency.code === code);
+}
+
+function formatRate(value) {
+  if (!Number.isFinite(value)) return "—";
+  if (value >= 100) return value.toLocaleString("en", { maximumFractionDigits: 2 });
+  if (value >= 1) return value.toLocaleString("en", { maximumFractionDigits: 4 });
+  return value.toLocaleString("en", { maximumFractionDigits: 6 });
+}
 
 function getRate(code) {
-  return (
-    liveRates[code] || CURRENCIES.find((c) => c.code === code)?.baseRate || 1
-  );
+  return rateState.liveRates[code] || currencyMeta(code)?.baseRate || 1;
+}
+
+function getPairRate(from, to) {
+  return (1 / getRate(from)) * getRate(to);
+}
+
+function animateTextValue(el, value) {
+  if (!el) return;
+  el.style.opacity = "0";
+  el.style.transform = "translateY(6px)";
+  setTimeout(() => {
+    el.textContent = value;
+    el.style.opacity = "1";
+    el.style.transform = "translateY(0)";
+  }, 140);
+}
+
+function setMovement(el, movement) {
+  if (!el) return;
+  const isUp = movement >= 0;
+  el.classList.toggle("up", isUp);
+  el.classList.toggle("down", !isUp);
+  el.textContent = `${isUp ? "▲ +" : "▼ -"}${Math.abs(movement).toFixed(2)}%`;
+}
+
+function updateSelectedRate() {
+  const code = rateState.selectedCurrency;
+  const rate = getPairRate(rateState.base, code);
+  const previous = rateState.prevRates[code] || rate;
+  const change = previous ? ((getRate(code) - previous) / previous) * 100 : 0;
+
+  if (selectedPair) selectedPair.textContent = `${rateState.base} → ${code}`;
+  animateTextValue(selectedRate, formatRate(rate));
+  setMovement(selectedChange, change);
+}
+
+function getRangeDays(range) {
+  return { "7D": 7, "1M": 30, "3M": 90, "1Y": 365 }[range] || 7;
+}
+
+function dateKey(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+function buildFallbackSeries(code, days) {
+  const current = getRate(code);
+  const points = Math.min(days, 90);
+  const start = new Date();
+  start.setDate(start.getDate() - days);
+
+  return Array.from({ length: points + 1 }, (_, index) => {
+    const progress = index / points;
+    const date = new Date(start);
+    date.setDate(start.getDate() + Math.round(progress * days));
+    const wave = Math.sin(index * 0.75) * 0.006 + Math.cos(index * 0.33) * 0.004;
+    const drift = (progress - 1) * 0.012;
+    return {
+      label: date.toLocaleDateString("en", { month: "short", day: "numeric" }),
+      value: current * (1 + wave + drift),
+    };
+  });
+}
+
+async function fetchHistoricalSeries(code, range) {
+  const days = getRangeDays(range);
+  const meta = currencyMeta(code);
+
+  if (!meta || code === "USD") return buildFallbackSeries(code, days);
+
+  const start = new Date();
+  start.setDate(start.getDate() - days);
+  const url = `https://api.frankfurter.app/${dateKey(start)}..?from=${rateState.base}&to=${code}`;
+  const res = await fetch(url, { signal: AbortSignal.timeout(7000) });
+  if (!res.ok) throw new Error("Historical rate request failed");
+  const data = await res.json();
+  const entries = Object.entries(data.rates || {});
+  if (!entries.length) return buildFallbackSeries(code, days);
+
+  return entries.map(([date, rates]) => ({
+    label: new Date(date).toLocaleDateString("en", { month: "short", day: "numeric" }),
+    value: rates[code],
+  }));
+}
+
+function drawRateChart(series) {
+  if (!chartCanvas || typeof Chart === "undefined") return;
+
+  const ctx = chartCanvas.getContext("2d");
+  const gradient = ctx.createLinearGradient(0, 0, 0, chartCanvas.offsetHeight || 220);
+  gradient.addColorStop(0, "rgba(196, 168, 232, 0.32)");
+  gradient.addColorStop(1, "rgba(196, 168, 232, 0)");
+
+  const data = {
+    labels: series.map((point) => point.label),
+    datasets: [{
+      data: series.map((point) => point.value),
+      borderColor: "#d7c1f5",
+      backgroundColor: gradient,
+      borderWidth: 2.5,
+      fill: true,
+      pointRadius: 0,
+      pointHoverRadius: 4,
+      pointHoverBackgroundColor: "#ffffff",
+      pointHoverBorderColor: "#c4a8e8",
+      pointHoverBorderWidth: 2,
+      tension: 0.42,
+    }],
+  };
+
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: { duration: 650, easing: "easeOutQuart" },
+    interaction: { intersect: false, mode: "index" },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        displayColors: false,
+        backgroundColor: "rgba(18, 11, 38, 0.94)",
+        borderColor: "rgba(196, 168, 232, 0.22)",
+        borderWidth: 1,
+        padding: 12,
+        callbacks: {
+          label: (context) => `${rateState.base} → ${rateState.selectedCurrency}: ${formatRate(context.parsed.y)}`,
+        },
+      },
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        ticks: { color: "rgba(239, 231, 255, 0.44)", maxTicksLimit: 4, font: { size: 11 } },
+        border: { display: false },
+      },
+      y: {
+        grid: { color: "rgba(239, 231, 255, 0.07)", drawTicks: false },
+        ticks: { display: false },
+        border: { display: false },
+      },
+    },
+  };
+
+  if (rateState.chart) {
+    rateState.chart.data = data;
+    rateState.chart.options = options;
+    rateState.chart.update();
+    return;
+  }
+
+  rateState.chart = new Chart(ctx, { type: "line", data, options });
+}
+
+async function updateChart() {
+  const requestId = ++rateState.chartRequest;
+  chartLoading?.classList.add("visible");
+
+  try {
+    const series = await fetchHistoricalSeries(rateState.selectedCurrency, rateState.selectedRange);
+    if (requestId !== rateState.chartRequest) return;
+    drawRateChart(series);
+
+    const first = series[0]?.value;
+    const last = series[series.length - 1]?.value;
+    if (first && last) setMovement(selectedChange, ((last - first) / first) * 100);
+  } catch {
+    if (requestId === rateState.chartRequest) drawRateChart(buildFallbackSeries(rateState.selectedCurrency, getRangeDays(rateState.selectedRange)));
+  } finally {
+    if (requestId === rateState.chartRequest) chartLoading?.classList.remove("visible");
+  }
+}
+
+function updateTimestamp() {
+  if (!ratesUpdated || !rateState.lastUpdated) return;
+  const seconds = Math.max(0, Math.floor((Date.now() - rateState.lastUpdated) / 1000));
+  ratesUpdated.textContent = seconds < 3 ? "Updated just now" : `Updated ${seconds} seconds ago`;
+}
+
+async function fetchRates() {
+  rateState.prevRates = { ...rateState.liveRates };
+  const supportedCodes = CURRENCIES.filter((currency) => currency.frankfurter && currency.code !== "USD").map((currency) => currency.code);
+
+  try {
+    const res = await fetch(`https://api.frankfurter.app/latest?from=USD&to=${supportedCodes.join(",")}`, { signal: AbortSignal.timeout(7000) });
+    if (!res.ok) throw new Error("Latest rate request failed");
+    const data = await res.json();
+    rateState.liveRates = { ...rateState.liveRates, USD: 1, ...data.rates };
+  } catch {
+    supportedCodes.forEach((code) => {
+      const previous = rateState.liveRates[code] || currencyMeta(code).baseRate;
+      rateState.liveRates[code] = previous * (1 + (Math.random() - 0.5) * 0.0015);
+    });
+  }
+
+  CURRENCIES.filter((currency) => !currency.frankfurter).forEach((currency) => {
+    const previous = rateState.liveRates[currency.code] || currency.baseRate;
+    rateState.liveRates[currency.code] = previous * (1 + (Math.random() - 0.5) * 0.0018);
+  });
+
+  rateState.lastUpdated = Date.now();
+  updateSelectedRate();
+  updateConverter();
+  updateTimestamp();
 }
 
 function updateConverter() {
@@ -210,35 +383,37 @@ function updateConverter() {
   const to = convTo?.value;
   if (!from || !to || !convNum) return;
 
-  // Convert: amount (from) → USD → to
-  const rateFrom = getRate(from);
-  const rateTo = getRate(to);
-  const result = (amount / rateFrom) * rateTo;
+  const perUnit = getPairRate(from, to);
+  const result = amount * perUnit;
 
-  if (amount === 0) {
-    convNum.textContent = "—";
-    convLabel.textContent = "Enter an amount to convert";
-    convRate.textContent = "";
+  if (amount <= 0) {
+    animateTextValue(convNum, "—");
+    if (convLabel) convLabel.textContent = "Estimated recipient gets";
+    if (convRate) convRate.textContent = "Enter an amount to see the live conversion rate.";
     return;
   }
 
-  // Animate result
-  convNum.style.transform = "scale(0.9)";
-  convNum.style.opacity = "0";
-  setTimeout(() => {
-    convNum.textContent =
-      result >= 1000
-        ? result.toLocaleString("en", { maximumFractionDigits: 2 })
-        : result.toFixed(4);
-    convLabel.textContent = `${from} → ${to}`;
-    convNum.style.transform = "scale(1)";
-    convNum.style.opacity = "1";
-    convNum.style.transition = "transform 0.25s, opacity 0.25s";
-  }, 150);
-
-  const perUnit = (1 / rateFrom) * rateTo;
-  convRate.textContent = `1 ${from} = ${perUnit >= 1 ? perUnit.toFixed(4) : perUnit.toFixed(6)} ${to}`;
+  animateTextValue(convNum, `${formatRate(result)} ${to}`);
+  if (convLabel) convLabel.textContent = "Estimated recipient gets";
+  if (convRate) convRate.textContent = `1 ${from} = ${formatRate(perUnit)} ${to}`;
 }
+
+currencyTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    rateState.selectedCurrency = tab.dataset.currency;
+    currencyTabs.forEach((item) => item.classList.toggle("active", item === tab));
+    updateSelectedRate();
+    updateChart();
+  });
+});
+
+rangeTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    rateState.selectedRange = tab.dataset.range;
+    rangeTabs.forEach((item) => item.classList.toggle("active", item === tab));
+    updateChart();
+  });
+});
 
 convAmount?.addEventListener("input", updateConverter);
 convFrom?.addEventListener("change", updateConverter);
@@ -250,6 +425,19 @@ swapBtn?.addEventListener("click", () => {
   convTo.value = tmp;
   updateConverter();
 });
+
+transferWhatsapp?.addEventListener("click", () => {
+  const amount = parseFloat(convAmount?.value) || 0;
+  const from = convFrom?.value || "USD";
+  const to = convTo?.value || "XAF";
+  const rate = formatRate(getPairRate(from, to));
+  const text = `Hello B.Guru, I would like to transfer ${formatRate(amount)} ${from} to ${to}. Current displayed rate: ${rate}.`;
+  window.open(`https://wa.me/237650653158?text=${encodeURIComponent(text)}`, "_blank");
+});
+
+fetchRates().then(updateChart);
+setInterval(fetchRates, 30000);
+setInterval(updateTimestamp, 1000);
 
 /* ── 8. CONTACT FORM → WHATSAPP ── */
 document.getElementById("cf-submit")?.addEventListener("click", () => {

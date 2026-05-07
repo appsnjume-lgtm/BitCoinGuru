@@ -88,6 +88,10 @@
         <h1 class="hero-title">Let's<br>Handle<br>Your<br>International<br>Transactions</h1>
         <p class="section-body">Enjoy fast, secure currency exchange with trusted rates and smooth transactions — across
           180+ countries. No hidden fees. No delays. Just money moving the way it should.</p>
+        <div class="hero-cta">
+          <a href="#contact" class="btn-primary">Get Started</a>
+          <a href="#about" class="btn-outline">Learn More</a>
+        </div>
         <div class="hero-stats">
           <div class="stat"><span class="stat-num" data-count="180">0</span><span>+</span>
             <div class="stat-label">Countries</div>
@@ -100,10 +104,6 @@
           <div class="stat"><span class="stat-num" data-count="99">0</span><span>%</span>
             <div class="stat-label">Satisfaction</div>
           </div>
-        </div>
-        <div class="hero-cta">
-          <a href="#contact" class="btn-primary">Get Started</a>
-          <a href="#about" class="btn-outline">Learn More</a>
         </div>
       </div>
       <div class="hero-image-shape" data-reveal data-delay="200">
@@ -212,66 +212,92 @@
         <p class="section-body">Real-time exchange rates — refreshed every 30 seconds. No hidden markups.</p>
       </div>
       <div class="rates-converter-wrap">
-        <!-- Live Rates Table -->
-        <div class="rates-table-wrap" data-reveal>
-          <div class="rates-table-header">
-            <span>Live Exchange Rates</span>
+        <article class="rate-card live-rate-card" data-reveal>
+          <div class="rate-card-top">
+            <span class="rate-eyebrow">Live Market Rates</span>
             <span class="rates-refresh"><span class="pulse-dot"></span> Live</span>
           </div>
-          <table class="rates-table" id="rates-table">
-            <thead>
-              <tr>
-                <th>Currency</th>
-                <th>Code</th>
-                <th>Rate (vs USD)</th>
-                <th>Change</th>
-              </tr>
-            </thead>
-            <tbody id="rates-body">
-              <!-- JS fills this -->
-            </tbody>
-          </table>
-          <div class="rates-footnote">Rates from open exchange API · Updated every 30s</div>
-        </div>
 
-        <!-- Currency Converter -->
-        <div class="converter-wrap" data-reveal data-delay="150">
-          <div class="converter-header">Currency Converter</div>
-          <div class="converter-row">
-            <label>Amount</label>
-            <input type="number" id="conv-amount" value="100" min="0" />
+          <div class="selected-rate-panel" id="selected-rate-panel">
+            <div>
+              <div class="selected-pair" id="selected-pair">USD → XAF</div>
+              <div class="selected-rate" id="selected-rate">604.58</div>
+            </div>
+            <div class="rate-change up" id="selected-change">▲ +0.12%</div>
           </div>
-          <div class="converter-row">
-            <label>From</label>
-            <select id="conv-from">
-              <option value="USD">🇺🇸 USD — US Dollar</option>
-              <option value="EUR">🇪🇺 EUR — Euro</option>
-              <option value="NGN">🇳🇬 NGN — Naira</option>
-              <option value="XAF">🇨🇲 XAF — CFA Franc</option>
-              <option value="GHS">🇬🇭 GHS — Ghana Cedis</option>
-              <option value="INR">🇮🇳 INR — Indian Rupee</option>
-            </select>
+
+          <div class="currency-tabs" id="currency-tabs" aria-label="Select live rate currency">
+            <button type="button" class="currency-tab" data-currency="EUR">EUR</button>
+            <button type="button" class="currency-tab" data-currency="NGN">NGN</button>
+            <button type="button" class="currency-tab active" data-currency="XAF">XAF</button>
+            <button type="button" class="currency-tab" data-currency="GHS">GHS</button>
+            <button type="button" class="currency-tab" data-currency="INR">INR</button>
           </div>
-          <button class="swap-btn" id="swap-btn" title="Swap currencies">⇅</button>
-          <div class="converter-row">
-            <label>To</label>
-            <select id="conv-to">
-              <option value="XAF">🇨🇲 XAF — CFA Franc</option>
-              <option value="USD">🇺🇸 USD — US Dollar</option>
-              <option value="EUR">🇪🇺 EUR — Euro</option>
-              <option value="NGN">🇳🇬 NGN — Naira</option>
-              <option value="GHS">🇬🇭 GHS — Ghana Cedis</option>
-              <option value="INR">🇮🇳 INR — Indian Rupee</option>
-            </select>
+
+          <div class="rate-chart-shell">
+            <canvas id="rate-chart" height="190"></canvas>
+            <div class="chart-loading" id="chart-loading">Updating rates...</div>
           </div>
+
+          <div class="range-tabs" id="range-tabs" aria-label="Select chart range">
+            <button type="button" class="range-tab active" data-range="7D">7D</button>
+            <button type="button" class="range-tab" data-range="1M">1M</button>
+            <button type="button" class="range-tab" data-range="3M">3M</button>
+            <button type="button" class="range-tab" data-range="1Y">1Y</button>
+          </div>
+
+          <div class="rate-card-footer">
+            <span id="rates-updated">Updated just now</span>
+            <span>Rates powered by Frankfurter API</span>
+          </div>
+        </article>
+
+        <article class="rate-card converter-wrap" data-reveal data-delay="150">
+          <div class="converter-header">
+            <span class="rate-eyebrow">Currency Converter</span>
+            <h3>Convert with confidence</h3>
+          </div>
+
+          <div class="converter-row">
+            <label for="conv-amount">Amount</label>
+            <input type="number" id="conv-amount" value="100" min="0" inputmode="decimal" />
+          </div>
+
+          <div class="converter-grid">
+            <div class="converter-row">
+              <label for="conv-from">From</label>
+              <select id="conv-from">
+                <option value="USD">USD — US Dollar</option>
+                <option value="EUR">EUR — Euro</option>
+                <option value="NGN">NGN — Naira</option>
+                <option value="XAF">XAF — CFA Franc</option>
+                <option value="GHS">GHS — Ghana Cedis</option>
+                <option value="INR">INR — Indian Rupee</option>
+              </select>
+            </div>
+            <button class="swap-btn" id="swap-btn" type="button" title="Swap currencies" aria-label="Swap currencies">⇄</button>
+            <div class="converter-row">
+              <label for="conv-to">To</label>
+              <select id="conv-to">
+                <option value="XAF">XAF — CFA Franc</option>
+                <option value="USD">USD — US Dollar</option>
+                <option value="EUR">EUR — Euro</option>
+                <option value="NGN">NGN — Naira</option>
+                <option value="GHS">GHS — Ghana Cedis</option>
+                <option value="INR">INR — Indian Rupee</option>
+              </select>
+            </div>
+          </div>
+
           <div class="conv-result" id="conv-result">
+            <div class="conv-result-label" id="conv-label">Estimated recipient gets</div>
             <div class="conv-result-num" id="conv-num">—</div>
-            <div class="conv-result-label" id="conv-label">Enter an amount to convert</div>
           </div>
-          <div class="conv-rate-display" id="conv-rate-display"></div>
-          <a href="https://wa.me/237650653158" class="btn-primary"
-            style="text-decoration:none;text-align:center;display:block;margin-top:20px;">Start a Transfer →</a>
-        </div>
+
+          <div class="conv-rate-display" id="conv-rate-display">Fetching live rate...</div>
+
+          <button type="button" class="btn-primary transfer-cta" id="transfer-whatsapp">Start Transfer on WhatsApp</button>
+        </article>
       </div>
     </section>
 
@@ -597,6 +623,7 @@
 
   </main>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="main.js"></script>
 </body>
 
